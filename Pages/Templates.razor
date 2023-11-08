@@ -1,0 +1,261 @@
+﻿@page "/template"
+
+@using Syncfusion.Blazor.Form
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.DropDowns
+@using FluentValidation
+
+<PageTitle>SfDataForm component</PageTitle>
+
+<h3>Blazored Fluent Validator</h3>
+
+<SfDataForm ID="MyForm"
+            Model="@exampleModel"
+            Width="60%"
+            Columns=1
+            ColumnSpacing="20px"
+            LabelPosition="FormLabelPosition.Top"
+            ButtonsAlignment="FormButtonsAlignment.Right"
+            ValidationMessageDisplay="@Validation" OnSubmit="HandleFormSubmit">
+    <FormValidation>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+    </FormValidation>
+    <FormItemsTemplate>
+        <SfTab CssClass="BlazorTab" Height="350px" @bind-SelectedItem="SelectedPage" LoadOn="ContentLoad.Demand">
+            <TabItems>
+                <TabItem Disabled="@LoginPage">
+                    <ChildContent>
+                        <TabHeader Text="Identity"></TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <div class="identity-tab">
+                            <div class="form-group">
+                                <label for="Email">Email:</label>
+                                <SfTextBox @bind-Value="@exampleModel.Email" id="Email"></SfTextBox>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <SfTextBox @bind-Value="@exampleModel.Password" id="Password"></SfTextBox>
+                            </div>
+                            <div class="form-group">
+                                <label for="ConfirmPassword">Confirm Password:</label>
+                                <SfTextBox @bind-Value="@exampleModel.ConfirmPassword" id="ConfirmPassword"></SfTextBox>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </TabItem>
+                <TabItem Disabled="@UserProfile">
+                    <ChildContent>
+                        <TabHeader Text="Employer Details">
+
+                        </TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <div class="form-group">
+                            <div style="display: flex; align-items: center;color: blue;cursor:pointer">
+                                <div style="display: flex; align-items: center;" @onclick="GoBack">
+                                    <i class="oi oi-chevron-left" style="font-size: 13px;"></i>
+                                    <span style="font-size: 14px; margin-left: 5px;text-decoration: underline;cursor:pointer">Back</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <div style="flex: 1;margin-right:30px;">
+                                    <label for="FirstName">First Name</label>
+                                    <SfTextBox @bind-Value="@exampleModel.FirstName" Placeholder="Enter First Name" id="FirstName"></SfTextBox>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="LastName">Last Name</label>
+                                    <SfTextBox @bind-Value="@exampleModel.LastName" Placeholder="Enter Last Name" id="LastName"></SfTextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div style="display: flex; flex-direction: row;">
+                                <div style="flex: 1;margin-right:30px;">
+                                    <label for="PhoneNumber">Phone Number</label>
+                                    <SfMaskedTextBox @bind-Value="exampleModel.PhoneNumber" Mask="0000000000" Placeholder="Enter Phone Number" PromptChar="@promptchar" id="PhoneNumber"></SfMaskedTextBox>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="Job">Job or Profession</label>
+                                    <SfTextBox @bind-Value="@exampleModel.Job" Placeholder="Enter Job or profession" id="Job"></SfTextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div style="display: flex; flex-direction: row;">
+                                <div style="flex: 1;margin-right:30px;">
+                                    <label for="Country">Country</label>
+                                    <SfTextBox @bind-Value="@exampleModel.Country" Placeholder="Enter Country" id="Country"></SfTextBox>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="City">City</label>
+                                    <SfTextBox @bind-Value="@exampleModel.City" Placeholder="Enter City" id="City"></SfTextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div style="display: flex; flex-direction: row;">
+                                <div style="flex: 1;margin-right:30px;">
+                                    <label for="State">State</label>
+                                    <SfTextBox @bind-Value="@exampleModel.State" Placeholder="Enter State" id="State"></SfTextBox>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="ZipCode">Zip Code</label>
+                                    <SfTextBox @bind-Value="@exampleModel.ZipCode" Placeholder="Enter Zip Code" id="ZipCode"></SfTextBox>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </TabItem>
+                <TabItem Disabled="@Finishpage">
+                    <ChildContent>
+                        <TabHeader Text="Finish"></TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <div class="spouse-details-tab">
+                            <div style="display: flex; align-items: center;color: blue;">
+                                <div style="display: flex; align-items: center;" @onclick="GoBack">
+                                    <i class="oi oi-chevron-left" style="font-size: 13px;"></i>
+                                    <span style="font-size: 14px; margin-left: 5px;text-decoration: underline;cursor:pointer">Back</span>
+                                </div>
+                            </div>
+                            <h4 style="margin-left: 70px; font-size: 15px;">Terms and Conditions</h4>
+                            <div style="width: 50%; margin-top: 20px;">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <SfCheckBox @bind-Checked="@exampleModel.TermsAndConditions"> Accept Terms and Conditions</SfCheckBox>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </TabItem>
+            </TabItems>
+        </SfTab>
+    </FormItemsTemplate>
+
+    <FormButtons>
+        <SfButton>Submit</SfButton>
+    </FormButtons>
+
+</SfDataForm>
+
+<style>
+    .identity-tab label {
+        font-weight: bold;
+    }
+
+    .employer-details-tab label {
+        font-weight: bold;
+    }
+
+    .spouse-details-tab span.back-button {
+        cursor: pointer;
+        color: blue;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .sf-maskedtextbox {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .sf-checkbox {
+        margin-top: 20px;
+    }
+
+    .back-button {
+        margin-bottom: 20px;
+    }
+</style>
+
+@code {
+    public char promptchar = ' ';
+    public bool LoginPage { get; set; } = false;
+    public bool UserProfile { get; set; } = false;
+    public bool Finishpage { get; set; } = false;
+    public int SelectedPage { get; set; } = 0;
+    private async Task HandleFormSubmit(EditContext editContext)
+    {
+        bool isFormValid = editContext.Validate();
+    }
+
+    private void GoBack()
+    {
+        SelectedPage = 0;
+    }
+
+    FormValidationMessageDisplay Validation { get; set; } = FormValidationMessageDisplay.Inline;
+
+    public class RegistrationModel
+    {
+        [Required(ErrorMessage = "Email ID is required.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Confirm Password is required.")]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "First Name is required.")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required.")]
+        public string LastName { get; set; }
+
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number.")]
+        public string PhoneNumber { get; set; }
+
+        public string Job { get; set; }
+
+        [Required(ErrorMessage = "Country is required.")]
+        public string Country { get; set; }
+
+        [Required(ErrorMessage = "State is required.")]
+        public string State { get; set; }
+
+        [Required(ErrorMessage = "City is required.")]
+        public string City { get; set; }
+
+        public string ZipCode { get; set; }
+
+        [Required(ErrorMessage = "You must accept the Terms and Conditions.")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool TermsAndConditions { get; set; }
+    }
+
+    private RegistrationModel exampleModel = new RegistrationModel();
+}

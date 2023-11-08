@@ -1,0 +1,75 @@
+﻿@page "/"
+@page "/Registration_Details"
+
+@using Syncfusion.Blazor.Form
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Popups
+
+<h3>Registration Details</h3>
+
+<SfDataForm ID="MyForm"
+            Model="@exampleModel"
+            Width="50%"
+            LabelPosition="FormLabelPosition.Top"
+            ButtonsAlignment="FormButtonsAlignment.Right"
+            ValidationMessageDisplay="@Validation" OnSubmit="HandleFormSubmit" OnUpdate="FormUpdate">
+    <FormValidation>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </FormValidation>
+    <FormItems>
+        <FormItem Field="@nameof(exampleModel.FirstName)" LabelText="First Name" Placeholder="Enter First Name"> </FormItem>
+        <FormItem Field="@nameof(exampleModel.LastName)" LabelText="Last Name" Placeholder="Enter Last Name"> </FormItem>
+        <FormItem Field="@nameof(exampleModel.EmailID)" LabelText="Email" Placeholder="Enter Email"></FormItem>
+        <FormItem Field="@nameof(exampleModel.DateOfBirth)" LabelText="Date Of Birth" Placeholder="Enter Date Of Birth"></FormItem>
+        <FormItem Field="@nameof(exampleModel.AcceptTerms)" EditorType="FormEditorType.Switch" LabelText="Agree to the terms and Conditions" Placeholder="Enter Date Of Birth"></FormItem>
+    </FormItems>
+    <FormItemsTemplate>
+
+    </FormItemsTemplate>
+    <FormButtons>
+        <SfButton>Submit</SfButton>
+    </FormButtons>
+</SfDataForm>
+
+@code {
+
+    private void FormUpdate(FormUpdateEventArgs args)
+    {
+
+    }
+
+    private async Task HandleFormSubmit(EditContext editContext)
+    {
+        bool isFormValid = editContext.Validate();
+    }
+
+    FormValidationMessageDisplay Validation { get; set; } = FormValidationMessageDisplay.Inline;
+
+    public class RegistrationDetails
+    {
+        
+        [Required(ErrorMessage = "First Name is required")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last Name is required")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        public string EmailID { get; set; }
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
+        [Required(ErrorMessage = "Date Of Birth is required")]
+        public DateTime? DateOfBirth { get; set; }
+        [Required(ErrorMessage = "Agree to the terms and conditions")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool AcceptTerms { get; set; }
+    }
+
+    private RegistrationDetails exampleModel = new RegistrationDetails();
+}
+
+
+
+

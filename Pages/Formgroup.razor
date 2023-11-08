@@ -1,0 +1,99 @@
+﻿@page "/Formgroup"
+
+@using Syncfusion.Blazor.Form
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Popups
+
+<PageTitle>SfDataForm component</PageTitle>
+
+<h3>Form Group</h3>
+
+<SfDataForm ID="MyForm"
+            Model="@exampleModel1"
+            Width="80%"
+            Columns=2
+            ColumnSpacing="20px"
+            LabelPosition="FormLabelPosition.Top"
+            ButtonsAlignment="FormButtonsAlignment.Right"
+            ValidationMessageDisplay="@Validation" OnSubmit="HandleFormSubmit" OnUpdate="FormUpdate">
+    <FormValidation>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </FormValidation>
+    <FormItems>
+        <FormGroup LabelText="User Information">
+            <FormItem Field="@nameof(exampleModel1.FirstName)" LabelText="First Name"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.LastName)" LabelText="Last Name"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.EmailID)" LabelText="Email" Placeholder="someone@example.com"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.OrderDate)" LabelText="Order Date" EditorType="FormEditorType.DatePicker"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.AcceptTerms)" LabelText="Terms and Conditions" EditorType="FormEditorType.Switch"></FormItem>
+        </FormGroup>
+        <FormGroup LabelText="Shipping Address" Columns="2" ColumnSpacing="20px">
+            <FormItem Field="@nameof(exampleModel1.Country)" ColumnSpan="1" LabelText="Country"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.City)" ColumnSpan="1" LabelText="City"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.ShippedDate)" ColumnSpan="2" LabelText="Shipped Date" EditorType="FormEditorType.DatePicker"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.AddressLine)" ColumnSpan="2"  LabelText="Address Line"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.AddressLine2)" ColumnSpan="2" LabelText="Address Line 2"></FormItem>
+        </FormGroup>
+    </FormItems>
+
+    <FormButtons>
+        <SfButton>Submit</SfButton>
+    </FormButtons>
+
+</SfDataForm>
+
+@code {
+    FormValidationMessageDisplay Validation { get; set; } = FormValidationMessageDisplay.Inline;
+
+    private void FormUpdate(FormUpdateEventArgs args)
+    {
+
+    }
+
+    private async Task HandleFormSubmit(EditContext editContext)
+    {
+        bool isFormValid = editContext.Validate();
+    }
+
+    public string[] data = new string[]{"Male" ,"Female","Others"};
+
+    public class Orders
+    {
+        // Group 1
+        [Required(ErrorMessage = "First Name is required")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        public string EmailID { get; set; }
+
+        [Required(ErrorMessage = "Order Date is required")]
+        public DateTime? OrderDate { get; set; }
+
+        [Required(ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool AcceptTerms { get; set; }
+
+        //Group-2 Shipping Address
+        [Required(ErrorMessage = "Shipped Date is required")]
+        public DateTime? ShippedDate { get; set; }
+
+        [Required(ErrorMessage = "Country is required")]
+        public string Country { get; set; }
+
+        [Required(ErrorMessage = "City is required")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "Address Line is required")]
+        public string AddressLine { get; set; }
+
+        public string AddressLine2 { get; set; }
+    }
+    private Orders exampleModel1 = new Orders();
+
+}

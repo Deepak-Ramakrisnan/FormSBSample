@@ -1,0 +1,200 @@
+﻿@page "/Adaptivelayout"
+
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Form
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Popups
+
+<PageTitle>SfDataForm component</PageTitle>
+
+<h3>Adaptive Layout</h3>
+
+<SfMediaQuery ActiveBreakpointChanged="LayoutChangedhandler"></SfMediaQuery>
+
+
+<SfDataForm ID="MyForm1"
+            Model="@exampleModel1"
+            Width="100%"
+            Columns="@FormColumn"
+            ColumnSpacing="50px"
+            LabelPosition="FormLabelPosition.Top"
+            ButtonsAlignment="FormButtonsAlignment.Right"
+            ValidationMessageDisplay="@Validation" OnSubmit="HandleFormSubmit" OnUpdate="FormUpdate">
+    <FormValidation>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </FormValidation>
+    <FormItems >
+        <FormGroup LabelText="Passenger-1 Details" Columns="@FormGroupColumn" ColumnSpacing="20px">
+            <FormItem Field="@nameof(exampleModel1.FirstName)" LabelText="FirstName"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.LastName)" LabelText="LastName"> </FormItem>
+            <FormItem Field="@nameof(exampleModel1.Email)" LabelText="Email" Placeholder="someone@example.com"> </FormItem>
+            <FormItem Field="@nameof(exampleModel1.age)" LabelText="Age"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.Sex)" LabelText="Sex" EditorType="FormEditorType.DropdownList">
+            </FormItem>
+        </FormGroup>
+        <FormGroup LabelText="Passenger-2 Details" Columns="@FormGroupColumn" ColumnSpacing="20px">
+            <FormItem Field="@nameof(exampleModel1.FirstName1)" LabelText="FirstName" ColumnSpan="FormItemColumnSpan"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.LastName1)" LabelText="LastName" ColumnSpan="FormItemColumnSpan"> </FormItem>
+            <FormItem Field="@nameof(exampleModel1.Email1)" LabelText="Email" Placeholder="someone@example.com"> </FormItem>
+            <FormItem Field="@nameof(exampleModel1.age1)" LabelText="Age"></FormItem>
+            <FormItem Field="@nameof(exampleModel1.Sex1)" LabelText="Sex" EditorType="FormEditorType.DropdownList">
+            </FormItem>
+        </FormGroup>
+        <FormItem Field="@nameof(exampleModel.Accept)" LabelText="Terms and Conditions" EditorType="FormEditorType.Switch"></FormItem>
+    </FormItems>
+
+    <FormButtons>
+        <SfButton>Submit</SfButton>
+    </FormButtons>
+
+</SfDataForm>
+
+@code {
+    public int FormItemColumnSpan = 2;
+    public int FormGroupColumn = 2;
+    public int FormColumn = 2;
+    public void LayoutChangedhandler(string activeBreakpoint)
+    {
+        if (activeBreakpoint == "Small")
+        {
+            FormGroupColumn = 1;
+            FormColumn = 1;
+        }
+        else if (activeBreakpoint == "Medium")
+        {
+            FormColumn = 2;
+            FormItemColumnSpan = 1;
+        }
+        else
+        {
+            FormColumn = 2;
+            FormGroupColumn = 2;
+            FormItemColumnSpan = 2;
+        }
+    }
+    private string activeBreakpoint { get; set; } = "Large";
+
+    private void FormUpdate(FormUpdateEventArgs args)
+    {
+
+    }
+
+    private async Task HandleFormSubmit(EditContext editContext)
+    {
+        bool isFormValid = editContext.Validate();
+
+        if (isFormValid)
+        {
+            //apply some custom logic when the form is valud
+        }
+        else
+        {
+            //apply some custom logic when the form is not valid
+        }
+    }
+
+    SfDataForm? validate;
+
+    FormValidationMessageDisplay Validation { get; set; } = FormValidationMessageDisplay.Inline;
+
+
+    public string[] data = new string[] { "Male", "Female", "Others" };
+
+    EditContext myEditContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        myEditContext = new EditContext(exampleModel);
+        base.OnInitialized();
+    }
+
+    public class ExampleModel
+    {
+
+        [Required(ErrorMessage = "Enter FirstName here")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Enter LastName here")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Enter Email here")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Enter Date here")]
+        public int? age { get; set; }
+
+        [Required(ErrorMessage = "You need to agree to the Terms and Conditions")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool Accept { get; set; }
+
+        [Required(ErrorMessage = "You need to choose the gender")]
+        public string Sex { get; set; }
+    }
+
+    private ExampleModel exampleModel = new ExampleModel();
+
+    public class ExampleModel1
+    {
+        [Required(ErrorMessage = "Enter FirstName here")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Enter LastName here")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Enter Email here")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Enter Date here")]
+        public int? age { get; set; }
+
+        [Required(ErrorMessage = "You need to agree to the Terms and Conditions")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool Accept { get; set; }
+
+        [Required(ErrorMessage = "You need to choose the gender")]
+        public string Sex { get; set; }
+
+        [Required(ErrorMessage = "Enter FirstName here")]
+        public string FirstName1 { get; set; }
+
+        [Required(ErrorMessage = "Enter LastName here")]
+        public string LastName1 { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string Password1 { get; set; }
+
+        [Required(ErrorMessage = "Enter Count here")]
+        public string ConfirmPassword1 { get; set; }
+
+        [Required(ErrorMessage = "Enter Email here")]
+        public string Email1 { get; set; }
+
+        [Required(ErrorMessage = "Enter Date here")]
+        public int? age1 { get; set; }
+
+        [Required(ErrorMessage = "You need to agree to the Terms and Conditions")]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the Terms and Conditions")]
+        public bool Accept1 { get; set; }
+
+        [Required(ErrorMessage = "You need to choose the gender")]
+        public string Sex1 { get; set; }
+    }
+
+    private ExampleModel1 exampleModel1 = new ExampleModel1();
+}

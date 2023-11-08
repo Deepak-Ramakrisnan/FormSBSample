@@ -1,0 +1,101 @@
+﻿@page "/CustomEditors"
+
+@using Syncfusion.Blazor.Form
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Calendars;
+@using Syncfusion.Blazor.Popups
+
+<h3>Registration Details</h3>
+
+<SfDataForm ID="MyForm"
+            Model="@exampleModel"
+            Width="50%"
+            Columns="2"
+            ColumnSpacing="20px"
+            LabelPosition="FormLabelPosition.Top"
+            ButtonsAlignment="FormButtonsAlignment.Right"
+            ValidationMessageDisplay="@Validation" OnSubmit="HandleFormSubmit" OnUpdate="FormUpdate">
+    <FormValidation>
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+    </FormValidation>
+    <FormItems>
+        <FormItem Field="@nameof(exampleModel.FirstName)" LabelText="First Name" Placeholder="Enter First Name" ColumnSpan="2"></FormItem>
+        <FormItem Field="@nameof(exampleModel.LastName)" LabelText="Last Name" Placeholder="Enter Last Name" ColumnSpan="2"></FormItem>
+        <FormItem Field="@nameof(exampleModel.EmailID)" LabelText="Email" Placeholder="Enter Email"></FormItem>
+        <FormItem Field="@nameof(exampleModel.ProductName)" LabelText="Product Name" Placeholder="Enter Product Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel.Quantity)" LabelText="Quantity" Placeholder="Enter Quantity"></FormItem>
+        <FormItem Field="@nameof(exampleModel.OrderDate)" LabelText="Order Date" Placeholder="Enter Order Date">
+            <Template>
+                <SfDateTimePicker TValue="DateTime?" Placeholder="Enter Order Date" Value="@exampleModel.OrderDate"></SfDateTimePicker>
+            </Template>
+        </FormItem>
+        <FormItem Field="@nameof(exampleModel.ShippingAddress)" LabelText="Shipping Address" Placeholder="Enter Shipping Address">
+            <Template>
+                <SfTextBox Placeholder="Enter Shipping Address" Value="@exampleModel.ShippingAddress" Multiline="true"></SfTextBox>
+            </Template>
+        </FormItem>
+        <FormItem Field="@nameof(exampleModel.ShippedDate)" LabelText="Shipped Date" Placeholder="Enter Shipped Date">
+            <Template>
+                <SfDateTimePicker TValue="DateTime?" Placeholder="Enter Shipped Date" Value="@exampleModel.ShippedDate"></SfDateTimePicker>
+            </Template>
+        </FormItem>
+        <FormItem Field="@nameof(exampleModel.AcceptTerms)" EditorType="FormEditorType.Switch" LabelText="Agree to the terms and Conditions"></FormItem>
+    </FormItems>
+    <FormItemsTemplate>
+
+    </FormItemsTemplate>
+    <FormButtons>
+        <SfButton>Submit</SfButton>
+    </FormButtons>
+</SfDataForm>
+
+@code {
+
+    private void FormUpdate(FormUpdateEventArgs args)
+    {
+
+    }
+
+    private async Task HandleFormSubmit(EditContext editContext)
+    {
+        bool isFormValid = editContext.Validate();
+    }
+
+    FormValidationMessageDisplay Validation { get; set; } = FormValidationMessageDisplay.Inline;
+
+    public class Orders
+    {
+        [Required(ErrorMessage = "First name is required")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email ID is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        public string EmailID { get; set; }
+
+        [Required(ErrorMessage = "Product name is required")]
+        public string ProductName { get; set; }
+
+        [Required(ErrorMessage = "Quantity is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than zero")]
+        public int Quantity { get; set; }
+
+        [Required(ErrorMessage = "Order date is required")]
+        public DateTime? OrderDate { get; set; }
+
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms and conditions")]
+        public bool AcceptTerms { get; set; }
+
+        public DateTime? ShippedDate { get; set; }
+
+        [Required(ErrorMessage = "Shipping address is required")]
+        public string ShippingAddress { get; set; }
+    }
+
+    private Orders exampleModel = new Orders();
+}
