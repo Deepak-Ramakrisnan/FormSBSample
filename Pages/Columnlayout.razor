@@ -1,4 +1,4 @@
-﻿@page "/coulmnlayout"
+@page "/coulmnlayout"
 
 @using Syncfusion.Blazor.Form
 @using System.ComponentModel.DataAnnotations
@@ -15,7 +15,7 @@
 <SfDataForm ID="MyForm"
             Model="@exampleModel1"
             Width="80%"
-            Columns=2
+            Columns=6
             ColumnSpacing="20px"
             LabelPosition="FormLabelPosition.Top"
             ButtonsAlignment="FormButtonsAlignment.Right"
@@ -24,20 +24,12 @@
         <DataAnnotationsValidator></DataAnnotationsValidator>
     </FormValidation>
     <FormItems>
-        <FormGroup LabelText="User Information">
-            <FormItem Field="@nameof(exampleModel1.FirstName)" LabelText="First Name"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.LastName)" LabelText="Last Name"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.EmailID)" LabelText="Email" Placeholder="someone@example.com"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.OrderDate)" LabelText="Order Date" EditorType="FormEditorType.DatePicker"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.AcceptTerms)" LabelText="Terms and Conditions" EditorType="FormEditorType.Switch"></FormItem>
-        </FormGroup>
-        <FormGroup LabelText="Shipping Address" Columns="6" ColumnSpacing="20px">
-            <FormItem Field="@nameof(exampleModel1.Country)" ColumnSpan="3" LabelText="Country"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.City)" ColumnSpan="3" LabelText="City"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.ShippedDate)" ColumnSpan="2" LabelText="Shipped Date" EditorType="FormEditorType.DatePicker"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.AddressLine)" ColumnSpan="2" LabelText="Address Line"></FormItem>
-            <FormItem Field="@nameof(exampleModel1.AddressLine2)" ColumnSpan="2" LabelText="Address Line 2"></FormItem>
-        </FormGroup>
+        <FormItem Field="@nameof(exampleModel1.FirstName)" ColumnSpan="3" LabelText="First Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel1.LastName)" ColumnSpan="3" LabelText="Last Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel1.City)" ColumnSpan="2" LabelText="First Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel1.State)" ColumnSpan="2" LabelText="Last Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel1.ZipCode)" ColumnSpan="2" LabelText="Last Name"></FormItem>
+        <FormItem Field="@nameof(exampleModel1.EmailId)" ColumnSpan="2" LabelText="Last Name"></FormItem>
     </FormItems>
 
     <FormButtons>
@@ -63,36 +55,23 @@
 
     public class Orders
     {
-        // Group 1
-        [Required(ErrorMessage = "First Name is required")]
+        [Required]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last Name is required")]
+        [Required]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        public string EmailID { get; set; }
+        [Required]
+        public string EmailId { get; set; }
 
-        [Required(ErrorMessage = "Order Date is required")]
-        public DateTime? OrderDate { get; set; }
-
-        [Required(ErrorMessage = "You must agree to the Terms and Conditions")]
-        public bool AcceptTerms { get; set; }
-
-        //Group-2 Shipping Address
-        [Required(ErrorMessage = "Shipped Date is required")]
-        public DateTime? ShippedDate { get; set; }
-
-        [Required(ErrorMessage = "Country is required")]
-        public string Country { get; set; }
-
-        [Required(ErrorMessage = "City is required")]
+        [Required]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Address Line is required")]
-        public string AddressLine { get; set; }
+        [Required]
+        public string State { get; set; }
 
-        public string AddressLine2 { get; set; }
+        [Required]
+        public string ZipCode { get; set; }
     }
     private Orders exampleModel1 = new Orders();
 
